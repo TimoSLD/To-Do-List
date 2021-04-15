@@ -33,8 +33,8 @@ $tasks = getAllTasks();
         <?php foreach ($tasks as $task) { ?>
     <div class="container img-thumbnail mt-3 mb-3">
         <h1><?=$task['name']?></h1>
-        <p><?=$task['description']?></p> 
-        <a class="lijsticons far fa-plus-square"  href="createTask.php?taskid=<?php echo $task['id']; ?>"></a>
+        <p><?=$task['description']?> , <?=$task['time'] ?></p>
+
         <a class="lijsticons fas fa-minus-circle" href="deleteTask.php?taskid=<?php echo $task['id']; ?>"></a>
         <a class="lijsticons fas fa-pen-square"   href="updateTask.php?id=<?php echo $task['id'];?>"></a>     
         </div>

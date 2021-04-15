@@ -69,7 +69,7 @@
     
     function getTasksWithId($id){
         $conn = openDataBaseConnection();
-        $stnt = $conn->prepare("SELECT * FROM task WHERE listid = :id" );
+        $stnt = $conn->prepare("SELECT * FROM task WHERE listid = :id");
         $stnt->execute([":id" => $id]);
         return $stnt->fetchAll();
         }  
