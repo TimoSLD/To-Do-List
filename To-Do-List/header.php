@@ -9,15 +9,18 @@ ul {
 }
 
 li {
-  float: left;
-  margin-left: 1rem;
+  text-align: center;
 }
 
 li a {
   display: block;
-  padding: 8px;
-  background-color: #dddddd;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
 }
+
+
 </style>
 </head>
 <body>
@@ -25,9 +28,20 @@ li a {
 <ul>
     <li>
         <form  class="form"  action="createList.php" method="post">
-            <input class="buttons" type="submit"  name="SorteerStatus" value="Create list"></input>
+            <input class="buttons" type="submit"  name="createList" value="Create list"></input>
         </form>
     </li>
+    <li>
+        <form  class="form"   method="post">
+            <input class="buttons" type="submit"  name="sortOnStatus" value="Sort tasks on status"></input>
+        </form>
+    </li>
+    <li>
+        <form class="form"  method="post">
+            <input class="buttons" type="submit"  name="sortOnTime" value="Sort on time"></input>
+        </form> 
+    </li>
+  
   
 
 

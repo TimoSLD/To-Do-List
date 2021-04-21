@@ -1,13 +1,9 @@
 <?php
 require('function.php');
 
-$id = $_GET['taskid'];
+$id = $_GET['id'];
 
 deleteTask($id);
-
-echo $id;
-
-
 
  header("Location: index.php");  
 ?> 

@@ -12,25 +12,20 @@
             return $conn;
     }
 
-    function insertList($name, $description){
-        $conn = openDatabaseConnection();
-        $stmt=$conn->prepare("INSERT INTO `lists` (`name`, `description`) Values (:name, :description)");
-        $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':description', $description);     
-        $stmt->execute();
-    }
-
     function getAllLists(){
         $conn = openDataBaseConnection();
-        $stnt=$conn->prepare('SELECT * FROM lists');
-        $stnt->execute();
-        return $stnt->fetchAll();
+        $stmt=$conn->prepare('SELECT * FROM lists');
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 
-    function deleteList($id){
-        $conn = openDataBaseConnection();
-        $stmt=$conn->prepare("DELETE FROM lists WHERE id= :deleteid");
-        $stmt->execute([":deleteid" => $id]);
+    function insertList($name, $description, $listtime){
+        $conn = openDatabaseConnection();
+        $stmt=$conn->prepare("INSERT INTO `lists` (`name`, `description`, `listtime`) Values (:name, :description, :listtime)");
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':listtime', $listtime);      
+        $stmt->execute();
     }
 
     function editList($id, $name, $description){
@@ -43,39 +38,61 @@
         $stmt->execute();
         }
 
-    function insertTask($listid, $name, $description, $status, $time){
-        $conn = openDatabaseConnection();
-        $stnt=$conn->prepare("INSERT INTO `task` (`listid`,`name`, `description`, `status`, `time`) Values (:listid, :name, :description, :status, :time)");
-        $stnt->bindParam(':listid', $listid);
-        $stnt->bindParam(':name', $name);
-        $stnt->bindParam(':description', $description);     
-        $stnt->bindParam(':status', $status);
-        $stnt->bindParam(':time', $time);
-        $stnt->execute();
+    function deleteList($id){
+        $conn = openDataBaseConnection();
+        $stmt=$conn->prepare("DELETE FROM lists WHERE id = :id");
+        $stnt=$conn->prepare("DELETE FROM task WHERE listid = :id");
+        $stmt->execute([":id" => $id]);
+        $stnt->execute([":id" => $id]);
     }
 
-    function deleteTaskID($id){
-        $conn = openDataBaseConnection();
-        $stnt=$conn->prepare("DELETE FROM task WHERE listid= :deleteid");
-        $stnt->execute([":deleteid" => $id]);
-    }
-
-    function getAllTasks(){
-        $conn = openDataBaseConnection();
-        $stnt=$conn->prepare('SELECT * FROM task');
-        $stnt->execute();
-        return $stnt->fetchAll();
-    }
-    
     function getTasksWithId($id){
         $conn = openDataBaseConnection();
-        $stnt = $conn->prepare("SELECT * FROM task WHERE listid = :id");
-        $stnt->execute([":id" => $id]);
-        return $stnt->fetchAll();
-        }  
+        $stmt = $conn->prepare("SELECT * FROM task WHERE listid = :id");
+        $stmt->execute([":id" => $id]);
+        return $stmt->fetchAll();
+        } 
 
+    function insertTask($listid, $name, $description, $status, $time){
+        $conn = openDatabaseConnection();
+        $stmt=$conn->prepare("INSERT INTO `task` (`listid`,`name`, `description`, `status`, `time`) Values (:listid, :name, :description, :status, :time)");
+        $stmt->bindParam(':listid', $listid);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':description', $description);     
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':time', $time);
+        $stmt->execute();
+    }
+
+    function editTask($id, $listid, $name, $description, $status, $time){
+        $conn = openDataBaseConnection(); 
+        $stmt = $conn->prepare("UPDATE `task` SET id = :id, listid = :listid,   name = :name,  description = :description,  status = :status,  time = :time WHERE id = :id");
+            
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':listid', $listid);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':time', $time);
+        $stmt->execute();
+    }
+ 
     function deleteTask($id){
         $conn = openDataBaseConnection();
-        $stnt=$conn->prepare("DELETE FROM task WHERE id= :taskid");
-        $stnt->execute([":taskid" => $id]);
-        }
+        $stmt=$conn->prepare("DELETE FROM task WHERE id= :id");
+        $stmt->execute([":id" => $id]);
+    }
+
+    function getAllStatusOrderBy($id){
+        $conn = openDataBaseConnection();
+        $stmt = $conn->prepare("SELECT * FROM task WHERE listid = :id ORDER BY status" );
+        $stmt->execute([":id" => $id]);
+        return $stmt->fetchAll();
+    }
+
+    function getAllTimeOrderBy($id){
+        $conn = openDataBaseConnection();
+        $stnt = $conn->prepare("SELECT * FROM task WHERE listid = :id ORDER BY time" );
+        $stnt->execute([":id" => $id]);
+        return $stnt->fetchAll();
+    }

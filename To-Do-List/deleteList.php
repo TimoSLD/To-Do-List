@@ -1,6 +1,6 @@
 <?php
 require('function.php');
-$id = $_GET['listid'];
+$id = $_GET['id'];
 deleteList($id);
 header("Location: index.php");  
 ?> 

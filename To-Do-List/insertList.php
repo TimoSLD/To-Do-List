@@ -3,14 +3,12 @@ require('function.php');
 
 $name = $_POST['name'];
 $description = $_POST['description'];
+$listtime = $_POST['listtime'];
 
 ?>
 
-name: <?= $name?> <br>
-description: <?= $description?>
-
 <?php
- insertList($name, $description);
+ insertList($name, $description, $listtime);
 
  header("Location: index.php"); 
 ?>
